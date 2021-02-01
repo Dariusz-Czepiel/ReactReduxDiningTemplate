@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactReduxDiningTemplate", "ReactReduxDiningTemplate\ReactReduxDiningTemplate.csproj", "{8CCFC7C8-E702-42BF-B3E3-6C03FC3A4690}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8CCFC7C8-E702-42BF-B3E3-6C03FC3A4690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CCFC7C8-E702-42BF-B3E3-6C03FC3A4690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CCFC7C8-E702-42BF-B3E3-6C03FC3A4690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CCFC7C8-E702-42BF-B3E3-6C03FC3A4690}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A6F9F39-ABDD-488B-B652-9E21E6942C58}
+	EndGlobalSection
+EndGlobal
