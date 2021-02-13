@@ -10,10 +10,10 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 
 import './custom.css'
 
-export default class App extends Component {
-  static displayName = App.name;
+export default function App {
+  //static displayName = App.name;
 
-  render () {
+  //render () {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
@@ -22,5 +22,5 @@ export default class App extends Component {
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
     );
-  }
+  //}
 }
