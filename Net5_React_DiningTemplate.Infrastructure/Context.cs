@@ -1,8 +1,10 @@
 ﻿using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Net5_React_DiningTemplate.Domain.Model;
+using Net5_React_DiningTemplate.Domain.Model.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Net5_React_DiningTemplate.Infrastructure
 {
-    public class Context : ApplicationDbContext
+    public class Context : ApiAuthorizationDbContext<ApplicationUser>
     {
         public DbSet<CuisineType> CuisineTypes { get; set; }
         public DbSet<Dish> Dishes { get; set; }
