@@ -22,13 +22,12 @@ namespace Net5_React_DiningTemplate.Infrastructure
 
         public Context(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
+            Initialize();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-
 
             //builder.Entity<Restaurant>()
             //    .HasOne(a => a.CustomerContactInformation).WithOne(b => b.Customer)
@@ -46,6 +45,45 @@ namespace Net5_React_DiningTemplate.Infrastructure
             //    .HasOne<Tag>(it => it.Tag)
             //    .WithMany(i => i.ItemTags)
             //    .HasForeignKey(it => it.TagId);
+        }
+
+        //made it a task to not hinder loading which is long enough as it is
+        public async Task Initialize()
+        {
+            //init roles
+            if(Roles.ToList().Count  == 0)
+            {
+                Roles.Add(new Microsoft.AspNetCore.Identity.IdentityRole("Admin") { Id="Admin", NormalizedName = "ADMIN" });
+                Roles.Add(new Microsoft.AspNetCore.Identity.IdentityRole("Manager") { Id = "Manager", NormalizedName = "MANAGER" });
+                Roles.Add(new Microsoft.AspNetCore.Identity.IdentityRole("User") { Id = "User", NormalizedName = "USER" });
+            }
+            //init user roles
+            if(UserRoles.ToList().Count < 3)
+            {
+                if(Users.Any(u => u.Email == "admin@email.com"))
+                {
+                    var adminUser = Users.First(u => u.Email == "admin@email.com");
+                    var adminRole = Roles.First(r => r.Name == "Admin");
+                    UserRoles.Add(new Microsoft.AspNetCore.Identity.IdentityUserRole<string> { UserId = adminUser.Id, RoleId = adminRole.Id });
+                }
+                if (Users.Any(u => u.Email == "manager@email.com"))
+                {
+                    var managerUser = Users.First(u => u.Email == "manager@email.com");
+                    var managerRole = Roles.First(r => r.Name == "Manager");
+                    UserRoles.Add(new Microsoft.AspNetCore.Identity.IdentityUserRole<string> { UserId = managerUser.Id, RoleId = managerRole.Id });
+                }
+                if (Users.Any(u => u.Email == "user@email.com"))
+                {
+                    var userUser = Users.First(u => u.Email == "user@email.com");
+                    var userRole = Roles.First(r => r.Name == "User");
+                    UserRoles.Add(new Microsoft.AspNetCore.Identity.IdentityUserRole<string> { UserId = userUser.Id, RoleId = userRole.Id });
+                }
+            }
+
+            //can we init users and userroles from here?
+
+            //init some restaurants, dishes etc?
+            SaveChanges();
         }
     }
 }
