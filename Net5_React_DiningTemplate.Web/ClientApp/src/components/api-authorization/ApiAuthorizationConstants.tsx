@@ -3,13 +3,13 @@ export const ApplicationName = 'Net5_React_DiningTemplate.Web';
 export const QueryParameterNames = {
   ReturnUrl: 'returnUrl',
   Message: 'message'
-};
+} as const;
 
 export const LogoutActions = {
   LogoutCallback: 'logout-callback',
   Logout: 'logout',
   LoggedOut: 'logged-out'
-};
+} as const;
 
 export const LoginActions = {
   Login: 'login',
@@ -17,7 +17,7 @@ export const LoginActions = {
   LoginFailed: 'login-failed',
   Profile: 'profile',
   Register: 'register'
-};
+} as const;
 
 const prefix = '/authentication';
 
@@ -35,4 +35,4 @@ export const ApplicationPaths = {
   LogOutCallback: `${prefix}/${LogoutActions.LogoutCallback}`,
   IdentityRegisterPath: 'Identity/Account/Register',
   IdentityManagePath: 'Identity/Account/Manage'
-};
+} as const;

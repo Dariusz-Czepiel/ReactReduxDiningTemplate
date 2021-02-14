@@ -26,8 +26,7 @@ export const NavMenu: FC = () => {
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                             </NavItem>
-                            <LoginMenu>
-                            </LoginMenu>
+                            <LoginMenu />
                         </ul>
                     </Collapse>
                 </Container>
