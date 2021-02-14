@@ -3,6 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 import './NavMenu.css';
+import { RenderIfRole } from './api-authorization/RenderIfRole';
 
 export const NavMenu: FC = () => {
     const [collapsed, setCollapsed] = useState(true);
@@ -27,9 +28,11 @@ export const NavMenu: FC = () => {
                                 <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                             </NavItem>
                             {/* THIS SHOULD BE HIDDEN IF USER NOT ADMIN */}
-                            <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/managementConsole">Management console</NavLink>
-                            </NavItem>
+                            <RenderIfRole role="Admin">
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/managementConsole">Management console</NavLink>
+                                </NavItem>
+                            </RenderIfRole>
                             <LoginMenu />
                         </ul>
                     </Collapse>

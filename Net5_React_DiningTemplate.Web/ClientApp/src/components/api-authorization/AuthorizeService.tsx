@@ -14,7 +14,9 @@ interface IIloginResult {
     message: string | undefined
 }
 
-type ProfileWithRole = Profile & { role?: string | string[] };
+export type UserRole = string | string[]
+
+type ProfileWithRole = Profile & { role?: UserRole };
 
 export class AuthorizeService {
     _callbacks: ICallbacks[] = [];
@@ -33,7 +35,7 @@ export class AuthorizeService {
         return !!user;
     }
 
-    async authenticateRoles(role: string | string[]) {
+    async authenticateRoles(role: UserRole) {
         const user = await this.getUser();
         if (!user?.role)
             return false;
