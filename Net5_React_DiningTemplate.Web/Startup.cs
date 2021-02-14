@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Net5_React_DiningTemplate.Web.Data;
+using Net5_React_DiningTemplate.Domain.Model.Identity;
+using Net5_React_DiningTemplate.Infrastructure;
 using Net5_React_DiningTemplate.Web.Identity;
-using Net5_React_DiningTemplate.Web.Models;
 
 namespace Net5_React_DiningTemplate.Web
 {
@@ -27,17 +27,17 @@ namespace Net5_React_DiningTemplate.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<Context>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<Context>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
+                .AddApiAuthorization<ApplicationUser, Context>()
                 .AddProfileService<ProfileService>();
 
             services.AddAuthentication()

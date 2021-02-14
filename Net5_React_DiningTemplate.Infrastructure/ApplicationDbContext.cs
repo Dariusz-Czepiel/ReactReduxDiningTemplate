@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Net5_React_DiningTemplate.Web.Models;
+using Net5_React_DiningTemplate.Domain.Model.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Net5_React_DiningTemplate.Web.Data
+namespace Net5_React_DiningTemplate.Infrastructure
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {

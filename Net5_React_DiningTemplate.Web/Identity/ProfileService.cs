@@ -2,7 +2,7 @@
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
-using Net5_React_DiningTemplate.Web.Models;
+using Net5_React_DiningTemplate.Domain.Model.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

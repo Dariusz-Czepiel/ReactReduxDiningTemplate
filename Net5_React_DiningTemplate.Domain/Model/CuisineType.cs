@@ -8,6 +8,6 @@ namespace Net5_React_DiningTemplate.Domain.Model
 {
     public record CuisineType(int Id, string Name, string? CountryOfOrigin)
     {
-        public virtual Dish Dish { get; set; }
+        public virtual ICollection<Dish> Dishes { get; set; }
     }
 }
