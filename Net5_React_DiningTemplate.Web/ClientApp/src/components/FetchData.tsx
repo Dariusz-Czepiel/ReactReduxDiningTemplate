@@ -52,9 +52,7 @@ export const FetchData: FC = () => {
     const response = await fetch('weatherforecast', {
       headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
     });
-      console.log('test');
     const data = await response.json();
-      console.log(data);
       setForecastsObj({ forecasts: data, loading: false });
   }
 
