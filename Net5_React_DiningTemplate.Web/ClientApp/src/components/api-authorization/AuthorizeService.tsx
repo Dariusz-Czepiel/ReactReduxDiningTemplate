@@ -14,7 +14,7 @@ interface IIloginResult {
     message: string | undefined
 }
 
-type ProfileWithRole = Profile & { role?: string };
+type ProfileWithRole = Profile & { role?: string | string[] };
 
 export class AuthorizeService {
     _callbacks: ICallbacks[] = [];
@@ -33,14 +33,21 @@ export class AuthorizeService {
         return !!user;
     }
 
-    async authenticateRole(role: string) {
+    async authenticateRoles(role: string | string[]) {
         const user = await this.getUser();
-        return user?.role === role;
+        if (!user?.role)
+            return false;
+        else {
+            if (Array.isArray(role))
+                return role.every(r => user.role?.includes(r));
+            else
+                return user.role?.includes(role);
+        }
     }
 
     async getUser(): Promise<ProfileWithRole | null | undefined> {
         if (this._user && this._user.profile) {
-            //console.log('user from authService', this._user.profile.role);
+            console.log('user from authService', this._user.profile.role);
             return this._user.profile;
         }
 
@@ -49,7 +56,7 @@ export class AuthorizeService {
         if (this.userManager instanceof UserManager) {
             user = await this.userManager.getUser();
         }
-        //console.log('user from authService', user);
+        console.log('user from authService', user);
         return user && user.profile;
     }
 

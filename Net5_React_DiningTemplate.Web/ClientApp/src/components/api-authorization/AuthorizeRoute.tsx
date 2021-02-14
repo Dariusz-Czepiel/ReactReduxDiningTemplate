@@ -23,7 +23,7 @@ export const AuthorizeRoute: FC<IAuthorizeRouteProps> = (props) => {
 
     const populateAuthenticationState = async () => {
         const authenticated = await authService.isAuthenticated();
-        const allowed = !props.role || await authService.authenticateRole(props.role);
+        const allowed = !props.role || await authService.authenticateRoles(props.role);
 
         setAuthInfo({ready: true, authenticated, allowed });
     }

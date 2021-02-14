@@ -19,7 +19,6 @@ export default function App() {
         <AuthorizeRoute path='/fetch-data' component={FetchData} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
         <AuthorizeRoute path='/managementConsole' component={ManagementConsole} role='Admin' />
-            {/* <Route path='/managementConsole' component={ManagementConsole} /> */}
       </Layout>
     );
 }
