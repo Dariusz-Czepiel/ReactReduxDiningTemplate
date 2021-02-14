@@ -1,8 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import authService from './api-authorization/AuthorizeService'
 
+//maybe I can cast date to js Date?
 interface Forecast {
-    date: Date,
+    date: string,
     temperatureC: number,
     temperatureF: number,
     summary: string
@@ -21,7 +22,7 @@ const renderForecastsTable = (forecasts: Array<Forecast>) => {
         </thead>
         <tbody>
             {forecasts.map(forecast =>
-            <tr key={forecast.date.toUTCString()}>
+            <tr key={forecast.date}>
                 <td>{forecast.date}</td>
                 <td>{forecast.temperatureC}</td>
                 <td>{forecast.temperatureF}</td>
@@ -46,8 +47,10 @@ export const FetchData: FC = () => {
     const response = await fetch('weatherforecast', {
       headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
     });
+      console.log('test');
     const data = await response.json();
-    setForecastsObj({ forecasts: data, loading: false });
+      console.log(data);
+      setForecastsObj({ forecasts: data, loading: false });
   }
 
     let contents = forecastsObj.loading
