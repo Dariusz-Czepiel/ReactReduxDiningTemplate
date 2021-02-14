@@ -9,6 +9,11 @@ interface Forecast {
     summary: string
 }
 
+interface IForecastsObj {
+    forecasts: Forecast[],
+    loading: boolean
+}
+
 const renderForecastsTable = (forecasts: Array<Forecast>) => {
     return (
         <table className='table table-striped' aria-labelledby="tabelLabel">
@@ -35,7 +40,7 @@ const renderForecastsTable = (forecasts: Array<Forecast>) => {
 }
 
 export const FetchData: FC = () => {
-    const [forecastsObj, setForecastsObj] = useState({ forecasts: [], loading: true });
+    const [forecastsObj, setForecastsObj] = useState<IForecastsObj>({ forecasts: [], loading: true });
 
 
     useEffect(() => {
