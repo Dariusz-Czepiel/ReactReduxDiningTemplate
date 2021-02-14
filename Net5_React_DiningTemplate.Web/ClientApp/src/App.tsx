@@ -7,6 +7,7 @@ import { Counter } from './components/Counter';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
+import { ManagementConsole } from './dining/ManagementConsole'
 
 import './custom.css'
 
@@ -17,6 +18,7 @@ export default function App() {
         <Route path='/counter' component={Counter} />
         <AuthorizeRoute path='/fetch-data' component={FetchData} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+        <Route path='/managementConsole' component={ManagementConsole} />
       </Layout>
     );
 }

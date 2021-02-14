@@ -26,6 +26,10 @@ export const NavMenu: FC = () => {
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                             </NavItem>
+                            {/* THIS SHOULD BE HIDDEN IF USER NOT ADMIN */}
+                            <NavItem>
+                                <NavLink tag={Link} className="text-dark" to="/managementConsole">Management console</NavLink>
+                            </NavItem>
                             <LoginMenu />
                         </ul>
                     </Collapse>
