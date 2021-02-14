@@ -79,10 +79,16 @@ namespace Net5_React_DiningTemplate.Infrastructure
                     UserRoles.Add(new Microsoft.AspNetCore.Identity.IdentityUserRole<string> { UserId = userUser.Id, RoleId = userRole.Id });
                 }
             }
+            //init some restaurants
+            if(Restaurants.ToList().Count < 3)
+            {
+                Restaurants.Add(new Restaurant(0, "Pizzeria Italiano", "Szlak 34 Kraków"));
+                Restaurants.Add(new Restaurant(0, "Hong bao", "Chinatown 120 Chicago"));
+                Restaurants.Add(new Restaurant(0, "Wiejskie smaczki", "Wiejska 3 Warszawa"));
+            }
+            //init some disches
 
-            //can we init users and userroles from here?
-
-            //init some restaurants, dishes etc?
+            //can we init users from here?
             SaveChanges();
         }
     }
