@@ -39,7 +39,7 @@ export const ManagementConsole: FC = () => {
             </p>
             <div>
                 Should be table here
-                <DatabaseTable columnNames={["bitch", "bitch", "bitch", "bitch"]} />
+                <DatabaseTable columns={['id', 'address', 'name']} data={restaurantsData.restaurants} />
             </div>
       </div>
     );

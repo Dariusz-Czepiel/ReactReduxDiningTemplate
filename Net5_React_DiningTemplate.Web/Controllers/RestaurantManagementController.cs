@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Net5_React_DiningTemplate.Application.Interfaces;
+using Net5_React_DiningTemplate.Application.ViewModels;
 using Net5_React_DiningTemplate.Domain.Model;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,9 @@ namespace Net5_React_DiningTemplate.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Restaurant> GetRestaurants()
+        public IEnumerable<RestaurantForListVM> GetRestaurants()
         {
-            return _restaurantManagementService.GetAllRestaurants().ToList();
+            return _restaurantManagementService.GetAllRestaurants();
         }
     }
 }

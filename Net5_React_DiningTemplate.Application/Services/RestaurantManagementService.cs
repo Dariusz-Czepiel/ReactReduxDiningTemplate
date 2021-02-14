@@ -1,4 +1,6 @@
-﻿using Net5_React_DiningTemplate.Application.Interfaces;
+﻿using AutoMapper;
+using Net5_React_DiningTemplate.Application.Interfaces;
+using Net5_React_DiningTemplate.Application.ViewModels;
 using Net5_React_DiningTemplate.Domain.Interfaces;
 using Net5_React_DiningTemplate.Domain.Model;
 using System;
@@ -12,15 +14,17 @@ namespace Net5_React_DiningTemplate.Application.Services
     public class RestaurantManagementService : IRestaurantManagementService
     {
         private IRestaurantManagementRepository _restaurantManagementRepo;
+        private IMapper _mapper;
 
-        public RestaurantManagementService(IRestaurantManagementRepository restaurantManagementRepository)
+        public RestaurantManagementService(IRestaurantManagementRepository restaurantManagementRepository, IMapper mapper)
         {
             _restaurantManagementRepo = restaurantManagementRepository;
+            _mapper = mapper;
         }
 
-        public IQueryable<Restaurant> GetAllRestaurants()
+        public List<RestaurantForListVM> GetAllRestaurants()
         {
-            return _restaurantManagementRepo.GetAllRestaurants();
+            return _restaurantManagementRepo.GetAllRestaurants().Select(r => _mapper.Map<RestaurantForListVM>(r)).ToList();
         }
     }
 }

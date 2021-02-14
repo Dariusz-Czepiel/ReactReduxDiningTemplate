@@ -1,4 +1,5 @@
-﻿using Net5_React_DiningTemplate.Domain.Model;
+﻿using Net5_React_DiningTemplate.Application.ViewModels;
+using Net5_React_DiningTemplate.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Net5_React_DiningTemplate.Application.Interfaces
 {
     public interface IRestaurantManagementService
     {
-        IQueryable<Restaurant> GetAllRestaurants();
+        List<RestaurantForListVM> GetAllRestaurants();
     }
 }

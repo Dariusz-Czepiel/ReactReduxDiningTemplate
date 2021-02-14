@@ -2,32 +2,29 @@ import * as React from 'react';
 import { FC, useState } from 'react';
 import { Table } from 'reactstrap'
 
-interface IDatabaseTableProps {
-    columnNames: string[]
-}
-
-const RenderColumns = (columnNames: string[]) => {
-    return columnNames.map(cn => <th>{cn}</th>);
-}
-
 //add generic types and extract keys for columns
-export const DatabaseTable: FC<IDatabaseTableProps> = ({ columnNames }) => {
+interface TableProps<GenericData> {
+	columns: Array<keyof GenericData>,
+	data: GenericData[]
+}
 
-    return (
-        <Table responsive>
-            <thead>
-                <tr>
-                    {RenderColumns(columnNames)}
-                </tr>
-            </thead>
+export function DatabaseTable<AvoidShadowedGenericData>({ data, columns }: TableProps<AvoidShadowedGenericData>) {
+	return (
+		<Table>
+			<thead>
+			{columns.map((c, i) => (
+				<th key={i}>{c}</th>
+			))}
+			</thead>
             <tbody>
-            <tr>
-                <td>Test1</td>
-                <td>Test2</td>
-                <td>Test3</td>
-                <td>Test4</td>
-            </tr>
+                {data.map((row, i) => (
+                    <tr key={i}>
+                        {columns.map((c, i) => (
+                            <th key={i}>{row[c]}</th>
+                        ))}
+                    </tr>
+                ))}
             </tbody>
-        </Table>
-    );
+		</Table>
+	)
 }
