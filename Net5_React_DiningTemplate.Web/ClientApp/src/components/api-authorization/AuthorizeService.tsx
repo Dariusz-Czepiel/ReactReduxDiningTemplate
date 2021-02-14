@@ -34,6 +34,7 @@ export class AuthorizeService {
 
     async getUser() {
         if (this._user && this._user.profile) {
+            console.log('user from authService', this._user);
             return this._user.profile;
         }
 

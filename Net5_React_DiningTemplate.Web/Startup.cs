@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Net5_React_DiningTemplate.Web.Data;
+using Net5_React_DiningTemplate.Web.Identity;
 using Net5_React_DiningTemplate.Web.Models;
 
 namespace Net5_React_DiningTemplate.Web
@@ -32,11 +33,12 @@ namespace Net5_React_DiningTemplate.Web
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
+                .AddProfileService<ProfileService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
