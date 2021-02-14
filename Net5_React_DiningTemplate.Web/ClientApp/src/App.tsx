@@ -18,7 +18,8 @@ export default function App() {
         <Route path='/counter' component={Counter} />
         <AuthorizeRoute path='/fetch-data' component={FetchData} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-        <Route path='/managementConsole' component={ManagementConsole} />
+        <AuthorizeRoute path='/managementConsole' component={ManagementConsole} role='Admin' />
+            {/* <Route path='/managementConsole' component={ManagementConsole} /> */}
       </Layout>
     );
 }

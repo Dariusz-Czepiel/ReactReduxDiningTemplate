@@ -5,23 +5,27 @@ import authService from './AuthorizeService'
 
 interface IAuthInfo {
     ready: boolean,
-    authenticated: boolean
+    authenticated: boolean,
+    allowed: boolean
 }
 
 interface IAuthorizeRouteProps {
-    path: any,
+    path: string,
     component: any,
+    role?: string
 }
 
 //TODO to moze zle dzialac przez _subscription albo drugi useEffect?
 export const AuthorizeRoute: FC<IAuthorizeRouteProps> = (props) => {
     let _subscription: any;
 
-    const [authInfo, setAuthInfo] = useState<IAuthInfo>({ ready: false, authenticated: false });
+    const [authInfo, setAuthInfo] = useState<IAuthInfo>({ ready: false, authenticated: false, allowed: true });
 
     const populateAuthenticationState = async () => {
         const authenticated = await authService.isAuthenticated();
-        setAuthInfo(ai => ({ ...ai, ready: true, authenticated }));
+        const allowed = !props.role || await authService.authenticateRole(props.role);
+
+        setAuthInfo({ready: true, authenticated, allowed });
     }
 
     const authenticationChanged = async () => {
@@ -40,7 +44,7 @@ export const AuthorizeRoute: FC<IAuthorizeRouteProps> = (props) => {
         }
     }, [_subscription])
 
-    const { ready, authenticated } = authInfo;
+    const { ready, authenticated, allowed } = authInfo;
     var link = document.createElement("a");
     link.href = props.path;
     const returnUrl = `${link.protocol}//${link.host}${link.pathname}${link.search}${link.hash}`;
@@ -51,10 +55,14 @@ export const AuthorizeRoute: FC<IAuthorizeRouteProps> = (props) => {
         const { component: Component, ...rest } = props;
         return <Route {...rest}
             render={(props) => {
-                if (authenticated) {
+                if (authenticated && allowed) {
                     return <Component {...props} />
                 } else {
-                    return <Redirect to={redirectUrl} />
+                    console.log('return url in authorize route', returnUrl);
+                    if(authenticated && !allowed)
+                        return <div><h2>You do not have permissions to view this</h2></div>;
+                    else
+                        return <Redirect to={redirectUrl} />
                 }
             }} />
     }
