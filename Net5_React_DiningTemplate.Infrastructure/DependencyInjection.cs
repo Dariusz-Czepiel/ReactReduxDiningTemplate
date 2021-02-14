@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Net5_React_DiningTemplate.Domain.Interfaces;
+using Net5_React_DiningTemplate.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,8 @@ namespace Net5_React_DiningTemplate.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            //services.AddTransient()
+            services.AddTransient<IRestaurantManagementRepository, RestaurantManagementRepository>();
+
             return services;
         }
     }

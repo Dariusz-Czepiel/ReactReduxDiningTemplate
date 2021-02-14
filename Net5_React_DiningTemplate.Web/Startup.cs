@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Net5_React_DiningTemplate.Application;
 using Net5_React_DiningTemplate.Domain.Model.Identity;
 using Net5_React_DiningTemplate.Infrastructure;
 using Net5_React_DiningTemplate.Web.Identity;
@@ -45,6 +46,9 @@ namespace Net5_React_DiningTemplate.Web
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddInfrastructure();
+            services.AddApplication();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

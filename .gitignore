@@ -234,3 +234,4 @@ _Pvt_Extensions
 
 # VS Code
 .vscode
+/Net5_React_DiningTemplate.Web/Controllers/Test.cs

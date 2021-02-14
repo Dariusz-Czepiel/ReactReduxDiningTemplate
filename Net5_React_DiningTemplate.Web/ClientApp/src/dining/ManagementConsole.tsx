@@ -24,7 +24,7 @@ export const ManagementConsole: FC = () => {
     
     const populateWeatherData = async () => {
         const token = await authService.getAccessToken();
-        const response = await fetch('weatherforecast', {
+        const response = await fetch('api/RestaurantManagement/GetRestaurants', {
             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
