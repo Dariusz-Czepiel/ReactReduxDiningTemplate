@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net5_React_DiningTemplate.Web", "Net5_React_DiningTemplate.Web\Net5_React_DiningTemplate.Web.csproj", "{827DE62C-B792-4EED-81AD-9DB60C75DD2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net5_React_DiningTemplate.Web", "Net5_React_DiningTemplate.Web\Net5_React_DiningTemplate.Web.csproj", "{827DE62C-B792-4EED-81AD-9DB60C75DD2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net5_React_DiningTemplate.Domain", "Net5_React_DiningTemplate.Domain\Net5_React_DiningTemplate.Domain.csproj", "{1B5B66D8-EE81-4981-843F-3AB6E612FB4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net5_React_DiningTemplate.Infrastructure", "Net5_React_DiningTemplate.Infrastructure\Net5_React_DiningTemplate.Infrastructure.csproj", "{710C5CE4-65E1-4256-B161-4471E8582D62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net5_React_DiningTemplate.Application", "Net5_React_DiningTemplate.Application\Net5_React_DiningTemplate.Application.csproj", "{85109801-7246-4945-897B-9D57A3D40237}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net5_React_DiningTemplate.Test", "Net5_React_DiningTemplate.Test\Net5_React_DiningTemplate.Test.csproj", "{1A293003-B31A-44FB-8137-F3BD20EE4726}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{827DE62C-B792-4EED-81AD-9DB60C75DD2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{827DE62C-B792-4EED-81AD-9DB60C75DD2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{827DE62C-B792-4EED-81AD-9DB60C75DD2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B5B66D8-EE81-4981-843F-3AB6E612FB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B5B66D8-EE81-4981-843F-3AB6E612FB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B5B66D8-EE81-4981-843F-3AB6E612FB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B5B66D8-EE81-4981-843F-3AB6E612FB4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710C5CE4-65E1-4256-B161-4471E8582D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710C5CE4-65E1-4256-B161-4471E8582D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710C5CE4-65E1-4256-B161-4471E8582D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710C5CE4-65E1-4256-B161-4471E8582D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85109801-7246-4945-897B-9D57A3D40237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85109801-7246-4945-897B-9D57A3D40237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85109801-7246-4945-897B-9D57A3D40237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85109801-7246-4945-897B-9D57A3D40237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A293003-B31A-44FB-8137-F3BD20EE4726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A293003-B31A-44FB-8137-F3BD20EE4726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A293003-B31A-44FB-8137-F3BD20EE4726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A293003-B31A-44FB-8137-F3BD20EE4726}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
