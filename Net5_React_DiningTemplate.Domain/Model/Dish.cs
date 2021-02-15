@@ -18,8 +18,8 @@ namespace Net5_React_DiningTemplate.Domain.Model
         //annotations don't seem to work in positional records
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
-        public virtual CuisineType CuisineType { get; set; }
-        public virtual Restaurant Restaurant { get; set; }
-        public virtual DiscountType DiscountType { get; set; }
+        public virtual CuisineType? CuisineType { get; set; }
+        public virtual Restaurant? Restaurant { get; set; }
+        public virtual DiscountType? DiscountType { get; set; }
     }
 }

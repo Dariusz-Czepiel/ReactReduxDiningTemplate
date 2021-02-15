@@ -1,12 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Net5_React_DiningTemplate.Web.Data.Migrations
+namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class InitDining : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dining");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -47,6 +50,21 @@ namespace Net5_React_DiningTemplate.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CuisineTypes",
+                schema: "dining",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountryOfOrigin = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CuisineTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DeviceCodes",
                 columns: table => new
                 {
@@ -63,6 +81,23 @@ namespace Net5_React_DiningTemplate.Web.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeviceCodes", x => x.UserCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DiscountTypes",
+                schema: "dining",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HourStart = table.Column<int>(type: "int", nullable: true),
+                    HourEnd = table.Column<int>(type: "int", nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(4,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiscountTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,6 +118,21 @@ namespace Net5_React_DiningTemplate.Web.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Restaurants",
+                schema: "dining",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Restaurants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,6 +241,70 @@ namespace Net5_React_DiningTemplate.Web.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Dishes",
+                schema: "dining",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MealType = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    CuisineTypeId = table.Column<int>(type: "int", nullable: true),
+                    RestaurantId = table.Column<int>(type: "int", nullable: true),
+                    DiscountTypeId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dishes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Dishes_CuisineTypes_CuisineTypeId",
+                        column: x => x.CuisineTypeId,
+                        principalSchema: "dining",
+                        principalTable: "CuisineTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Dishes_DiscountTypes_DiscountTypeId",
+                        column: x => x.DiscountTypeId,
+                        principalSchema: "dining",
+                        principalTable: "DiscountTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Dishes_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalSchema: "dining",
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RestaurantManagers",
+                schema: "dining",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    RestaurantId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RestaurantManagers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RestaurantManagers_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalSchema: "dining",
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -242,6 +356,24 @@ namespace Net5_React_DiningTemplate.Web.Data.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dishes_CuisineTypeId",
+                schema: "dining",
+                table: "Dishes",
+                column: "CuisineTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dishes_DiscountTypeId",
+                schema: "dining",
+                table: "Dishes",
+                column: "DiscountTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dishes_RestaurantId",
+                schema: "dining",
+                table: "Dishes",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
                 column: "Expiration");
@@ -255,6 +387,12 @@ namespace Net5_React_DiningTemplate.Web.Data.Migrations
                 name: "IX_PersistedGrants_SubjectId_SessionId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "SessionId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RestaurantManagers_RestaurantId",
+                schema: "dining",
+                table: "RestaurantManagers",
+                column: "RestaurantId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -278,13 +416,33 @@ namespace Net5_React_DiningTemplate.Web.Data.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
+                name: "Dishes",
+                schema: "dining");
+
+            migrationBuilder.DropTable(
                 name: "PersistedGrants");
+
+            migrationBuilder.DropTable(
+                name: "RestaurantManagers",
+                schema: "dining");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "CuisineTypes",
+                schema: "dining");
+
+            migrationBuilder.DropTable(
+                name: "DiscountTypes",
+                schema: "dining");
+
+            migrationBuilder.DropTable(
+                name: "Restaurants",
+                schema: "dining");
         }
     }
 }

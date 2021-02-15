@@ -10,6 +10,6 @@ namespace Net5_React_DiningTemplate.Domain.Model
     [Table("RestaurantManagers", Schema = "dining")]
     public record RestaurantManager(int Id, string FirstName, string LastName, int Age)
     {
-        public virtual Restaurant Restaurant { get; set; }
+        public virtual Restaurant? Restaurant { get; set; }
     }
 }

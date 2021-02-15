@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net5_React_DiningTemplate.Infrastructure;
 
 namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210214214131_Dining2")]
-    partial class Dining2
+    partial class ContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,6 +276,31 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                     b.ToTable("CuisineTypes", "dining");
                 });
 
+            modelBuilder.Entity("Net5_React_DiningTemplate.Domain.Model.DiscountType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(4,2)");
+
+                    b.Property<int?>("HourEnd")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HourStart")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DiscountTypes", "dining");
+                });
+
             modelBuilder.Entity("Net5_React_DiningTemplate.Domain.Model.Dish", b =>
                 {
                     b.Property<int>("Id")
@@ -285,7 +308,10 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CuisineTypeId")
+                    b.Property<int?>("CuisineTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DiscountTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("MealType")
@@ -298,12 +324,14 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CuisineTypeId");
+
+                    b.HasIndex("DiscountTypeId");
 
                     b.HasIndex("RestaurantId");
 
@@ -478,17 +506,19 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                 {
                     b.HasOne("Net5_React_DiningTemplate.Domain.Model.CuisineType", "CuisineType")
                         .WithMany("Dishes")
-                        .HasForeignKey("CuisineTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CuisineTypeId");
+
+                    b.HasOne("Net5_React_DiningTemplate.Domain.Model.DiscountType", "DiscountType")
+                        .WithMany("Dishes")
+                        .HasForeignKey("DiscountTypeId");
 
                     b.HasOne("Net5_React_DiningTemplate.Domain.Model.Restaurant", "Restaurant")
                         .WithMany("Dishes")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("CuisineType");
+
+                    b.Navigation("DiscountType");
 
                     b.Navigation("Restaurant");
                 });
@@ -505,6 +535,11 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Net5_React_DiningTemplate.Domain.Model.CuisineType", b =>
+                {
+                    b.Navigation("Dishes");
+                });
+
+            modelBuilder.Entity("Net5_React_DiningTemplate.Domain.Model.DiscountType", b =>
                 {
                     b.Navigation("Dishes");
                 });

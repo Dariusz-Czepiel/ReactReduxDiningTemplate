@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Net5_React_DiningTemplate.Domain.Model
 {
     [Table("DiscountTypes", Schema = "dining")]
-    public record DiscountType(int Id, int? HourStart, int? HourEnd)
+    public record DiscountType(int Id, string Name, int? HourStart, int? HourEnd)
     {
         //use fluent adnotations instead so I can put Amount in record?
         [Column(TypeName ="decimal(4,2)")]

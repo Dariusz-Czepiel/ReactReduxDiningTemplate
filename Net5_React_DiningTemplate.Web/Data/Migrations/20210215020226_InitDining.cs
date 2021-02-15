@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 {
-    public partial class Dining : Migration
+    public partial class InitDining : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dining");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -48,6 +51,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "CuisineTypes",
+                schema: "dining",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -80,6 +84,23 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DiscountTypes",
+                schema: "dining",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HourStart = table.Column<int>(type: "int", nullable: true),
+                    HourEnd = table.Column<int>(type: "int", nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(4,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiscountTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
@@ -101,6 +122,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Restaurants",
+                schema: "dining",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -221,6 +243,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Dishes",
+                schema: "dining",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -228,8 +251,9 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MealType = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    CuisineTypeId = table.Column<int>(type: "int", nullable: false),
-                    RestaurantId = table.Column<int>(type: "int", nullable: false)
+                    CuisineTypeId = table.Column<int>(type: "int", nullable: true),
+                    RestaurantId = table.Column<int>(type: "int", nullable: true),
+                    DiscountTypeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -237,19 +261,29 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Dishes_CuisineTypes_CuisineTypeId",
                         column: x => x.CuisineTypeId,
+                        principalSchema: "dining",
                         principalTable: "CuisineTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Dishes_DiscountTypes_DiscountTypeId",
+                        column: x => x.DiscountTypeId,
+                        principalSchema: "dining",
+                        principalTable: "DiscountTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Dishes_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
+                        principalSchema: "dining",
                         principalTable: "Restaurants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "RestaurantManagers",
+                schema: "dining",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -265,6 +299,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_RestaurantManagers_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
+                        principalSchema: "dining",
                         principalTable: "Restaurants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -322,11 +357,19 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dishes_CuisineTypeId",
+                schema: "dining",
                 table: "Dishes",
                 column: "CuisineTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dishes_DiscountTypeId",
+                schema: "dining",
+                table: "Dishes",
+                column: "DiscountTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Dishes_RestaurantId",
+                schema: "dining",
                 table: "Dishes",
                 column: "RestaurantId");
 
@@ -347,6 +390,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_RestaurantManagers_RestaurantId",
+                schema: "dining",
                 table: "RestaurantManagers",
                 column: "RestaurantId");
         }
@@ -372,13 +416,15 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
-                name: "Dishes");
+                name: "Dishes",
+                schema: "dining");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "RestaurantManagers");
+                name: "RestaurantManagers",
+                schema: "dining");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -387,10 +433,16 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "CuisineTypes");
+                name: "CuisineTypes",
+                schema: "dining");
 
             migrationBuilder.DropTable(
-                name: "Restaurants");
+                name: "DiscountTypes",
+                schema: "dining");
+
+            migrationBuilder.DropTable(
+                name: "Restaurants",
+                schema: "dining");
         }
     }
 }

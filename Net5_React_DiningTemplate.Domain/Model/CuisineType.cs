@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Net5_React_DiningTemplate.Domain.Model
 {
     [Table("CuisineTypes", Schema = "dining")]
-    public record CuisineType(int Id, string Name, string? CountryOfOrigin)
+    public record CuisineType(int Id, string Name, string? CountryOfOrigin = null)
     {
         public virtual ICollection<Dish> Dishes { get; set; }
     }

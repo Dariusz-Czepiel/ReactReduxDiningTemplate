@@ -10,8 +10,8 @@ using Net5_React_DiningTemplate.Infrastructure;
 namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210215011753_Dining3")]
-    partial class Dining3
+    [Migration("20210215020226_InitDining")]
+    partial class InitDining
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -294,6 +294,10 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                     b.Property<int?>("HourStart")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("DiscountTypes", "dining");
@@ -306,10 +310,10 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CuisineTypeId")
+                    b.Property<int?>("CuisineTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DiscountTypeId")
+                    b.Property<int?>("DiscountTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("MealType")
@@ -322,7 +326,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -504,21 +508,15 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                 {
                     b.HasOne("Net5_React_DiningTemplate.Domain.Model.CuisineType", "CuisineType")
                         .WithMany("Dishes")
-                        .HasForeignKey("CuisineTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CuisineTypeId");
 
                     b.HasOne("Net5_React_DiningTemplate.Domain.Model.DiscountType", "DiscountType")
                         .WithMany("Dishes")
-                        .HasForeignKey("DiscountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DiscountTypeId");
 
                     b.HasOne("Net5_React_DiningTemplate.Domain.Model.Restaurant", "Restaurant")
                         .WithMany("Dishes")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("CuisineType");
 
