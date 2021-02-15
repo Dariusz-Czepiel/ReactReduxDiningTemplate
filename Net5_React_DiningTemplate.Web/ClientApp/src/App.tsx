@@ -8,6 +8,7 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import { ManagementConsole } from './dining/ManagementConsole'
+import { AddRestaurant } from './dining/AddRestaurant'
 
 import './custom.css'
 
@@ -19,6 +20,7 @@ export default function App() {
         <Route path='/fetch-data' component={FetchData} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
         <AuthorizeRoute path='/managementConsole' component={ManagementConsole} role='Admin' />
+        <AuthorizeRoute path='/addRestaurant' component={AddRestaurant} role='Admin' />
       </Layout>
     );
 }

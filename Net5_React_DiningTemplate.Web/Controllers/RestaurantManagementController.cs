@@ -28,5 +28,11 @@ namespace Net5_React_DiningTemplate.Web.Controllers
         {
             return _restaurantManagementService.GetAllRestaurants();
         }
+
+        [HttpPost]
+        public void AddRestaurant([FromBody]RestaurantForListVM newRestaurant)
+        {
+            
+        }
     }
 }
