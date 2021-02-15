@@ -9,10 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Net5_React_DiningTemplate.Application;
 using Net5_React_DiningTemplate.Domain.Model.Identity;
 using Net5_React_DiningTemplate.Infrastructure;
 using Net5_React_DiningTemplate.Web.Identity;
+using System;
+using System.Collections.Generic;
 
 namespace Net5_React_DiningTemplate.Web
 {
@@ -50,8 +53,34 @@ namespace Net5_React_DiningTemplate.Web
             services.AddInfrastructure();
             services.AddApplication();
 
-            // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DiningTemplateApi", Version = "v1" });
+                c.AddSecurityDefinition("My Security Definition", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    OpenIdConnectUrl = new Uri($"https://localhost:44342/.well-known/openid-configuration"),
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        ClientCredentials = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri($"https://localhost:44342/connnect/authorize"),
+                            TokenUrl = new Uri($"https://localhost:44342/connect/token"),
+                            Scopes = new Dictionary<string, string>
+                                {
+                                    { "write", "the right to write" },
+                                    { "read", "the right to read" }
+                                }
+                        }
+                    }
+                });
+
+                c.OperationFilter<SwaggerAuthenticationRequirementsOperationFilter>();
+            });
+
+          // In production, the React files will be served from this directory
+          services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
@@ -64,6 +93,8 @@ namespace Net5_React_DiningTemplate.Web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DiningTemplateApi v1"));
             }
             else
             {
