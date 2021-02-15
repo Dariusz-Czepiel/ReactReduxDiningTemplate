@@ -10,7 +10,7 @@ using Net5_React_DiningTemplate.Infrastructure;
 namespace Net5_React_DiningTemplate.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210215020226_InitDining")]
+    [Migration("20210215020923_InitDining")]
     partial class InitDining
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -443,7 +443,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -529,9 +529,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                 {
                     b.HasOne("Net5_React_DiningTemplate.Domain.Model.Restaurant", "Restaurant")
                         .WithMany("Managers")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("Restaurant");
                 });

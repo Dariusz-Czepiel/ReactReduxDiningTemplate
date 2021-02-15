@@ -22,6 +22,21 @@ namespace Net5_React_DiningTemplate.Application.Services
             _mapper = mapper;
         }
 
+        public List<DiscountType> GetAllDiscountTypes()
+        {
+            return _restaurantManagementRepo.GetAllDiscountTypes().ToList();
+        }
+
+        public List<Dish> GetAllDishes()
+        {
+            return _restaurantManagementRepo.GetAllDishes().ToList();
+        }
+
+        public List<RestaurantManager> GetAllRestaurantManagers()
+        {
+            return _restaurantManagementRepo.GetAllManagers().ToList();
+        }
+
         public List<RestaurantForListVM> GetAllRestaurants()
         {
             return _restaurantManagementRepo.GetAllRestaurants().Select(r => _mapper.Map<RestaurantForListVM>(r)).ToList();

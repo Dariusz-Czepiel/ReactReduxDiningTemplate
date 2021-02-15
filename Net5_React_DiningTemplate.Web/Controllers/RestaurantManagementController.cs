@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Net5_React_DiningTemplate.Web.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class RestaurantManagementController : ControllerBase
@@ -23,12 +22,29 @@ namespace Net5_React_DiningTemplate.Web.Controllers
             _restaurantManagementService = restaurantManagementService;
         }
 
+        [Authorize]
         [HttpGet]
         public IEnumerable<RestaurantForListVM> GetRestaurants()
         {
             return _restaurantManagementService.GetAllRestaurants();
         }
+        [HttpGet]
+        public IEnumerable<RestaurantManager> GetManagers()
+        {
+            return _restaurantManagementService.GetAllRestaurantManagers();
+        }
+        [HttpGet]
+        public IEnumerable<Dish> GetDishes()
+        {
+            return _restaurantManagementService.GetAllDishes();
+        }
+        [HttpGet]
+        public IEnumerable<DiscountType> GetDiscountTypes()
+        {
+            return _restaurantManagementService.GetAllDiscountTypes();
+        }
 
+        [Authorize]
         [HttpPost]
         public void AddRestaurant([FromBody]RestaurantForListVM newRestaurant)
         {

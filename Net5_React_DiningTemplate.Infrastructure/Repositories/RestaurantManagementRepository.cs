@@ -17,9 +17,23 @@ namespace Net5_React_DiningTemplate.Infrastructure.Repositories
             _context = context;
         }
 
+        public IQueryable<DiscountType> GetAllDiscountTypes()
+        {
+            return _context.DiscountTypes.AsQueryable();
+        }
+
+        public IQueryable<Dish> GetAllDishes()
+        {
+            return _context.Dishes.AsQueryable();
+        }
+
+        public IQueryable<RestaurantManager> GetAllManagers()
+        {
+            return _context.RestaurantManagers.AsQueryable();
+        }
+
         public IQueryable<Restaurant> GetAllRestaurants()
         {
-            //should be to list to actually download data?
             return _context.Restaurants.AsQueryable();
         }
     }

@@ -441,7 +441,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -527,9 +527,7 @@ namespace Net5_React_DiningTemplate.Infrastructure.Migrations
                 {
                     b.HasOne("Net5_React_DiningTemplate.Domain.Model.Restaurant", "Restaurant")
                         .WithMany("Managers")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("Restaurant");
                 });
