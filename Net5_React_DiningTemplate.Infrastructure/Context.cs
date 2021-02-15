@@ -19,6 +19,7 @@ namespace Net5_React_DiningTemplate.Infrastructure
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<RestaurantManager> RestaurantManagers { get; set; }
+        public DbSet<DiscountType> DiscountTypes{ get; set; }
 
         public Context(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
@@ -86,7 +87,20 @@ namespace Net5_React_DiningTemplate.Infrastructure
                 Restaurants.Add(new Restaurant(0, "Hong bao", "Chinatown 120 Chicago"));
                 Restaurants.Add(new Restaurant(0, "Wiejskie smaczki", "Wiejska 3 Warszawa"));
             }
-            //init some disches
+            //init some managers
+            if(RestaurantManagers.ToList().Count < 3)
+            {
+                RestaurantManagers.Add(new RestaurantManager(0, "Maciek", "Kowalski", 45));
+                RestaurantManagers.Add(new RestaurantManager(0, "Przemek", "Nowak", 35));
+                RestaurantManagers.Add(new RestaurantManager(0, "Zdzisław", "Jankowksi", 55));
+            }
+            //init some dishes
+            if(Dishes.ToList().Count < 3)
+            {
+                Dishes.Add(new Dish(0, "Lasagne", MealType.Meat));
+                Dishes.Add(new Dish(0, "Fish and chips", MealType.Fish));
+                Dishes.Add(new Dish(0, "Fried vegetables", MealType.Vegan));
+            }
 
             //can we init users from here?
             SaveChanges();

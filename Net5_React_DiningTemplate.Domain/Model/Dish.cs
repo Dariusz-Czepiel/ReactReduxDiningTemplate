@@ -20,5 +20,6 @@ namespace Net5_React_DiningTemplate.Domain.Model
         public decimal Price { get; set; }
         public virtual CuisineType CuisineType { get; set; }
         public virtual Restaurant Restaurant { get; set; }
+        public virtual DiscountType DiscountType { get; set; }
     }
 }
