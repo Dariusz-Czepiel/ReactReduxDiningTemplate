@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Net5_React_DiningTemplate.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

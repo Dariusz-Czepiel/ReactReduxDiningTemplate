@@ -16,7 +16,7 @@ export default function App() {
       <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/counter' component={Counter} />
-        <AuthorizeRoute path='/fetch-data' component={FetchData} />
+        <Route path='/fetch-data' component={FetchData} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
         <AuthorizeRoute path='/managementConsole' component={ManagementConsole} role='Admin' />
       </Layout>
