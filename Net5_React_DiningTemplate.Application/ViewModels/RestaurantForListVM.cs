@@ -19,6 +19,7 @@ namespace Net5_React_DiningTemplate.Application.ViewModels
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Restaurant, RestaurantForListVM>();
+            profile.CreateMap<RestaurantForListVM, Restaurant>();
         }
     }
 }

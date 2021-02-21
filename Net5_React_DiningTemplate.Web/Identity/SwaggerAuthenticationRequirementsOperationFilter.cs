@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,31 @@ namespace Net5_React_DiningTemplate.Web.Identity
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (operation.Security == null)
+            // Policy names map to scopes
+            var requiredScopes = context.MethodInfo
+                .GetCustomAttributes(true)
+                .OfType<AuthorizeAttribute>()
+                .Select(attr => attr.Policy)
+                .Distinct();
+
+            if (requiredScopes.Any())
             {
-                operation.Security = new List<OpenApiSecurityRequirement>();
+                operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
+                operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+
+                var oAuthScheme = new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "My Security Definition" }
+                };
+
+                operation.Security = new List<OpenApiSecurityRequirement>
+            {
+                new OpenApiSecurityRequirement
+                {
+                    [ oAuthScheme ] = requiredScopes.ToList()
+                }
+            };
             }
-
-            var scheme = new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "My Security Definition" } };
-
-            operation.Security.Add(new OpenApiSecurityRequirement
-            {
-                [scheme] = new List<string>()
-            });
         }
     }
 }

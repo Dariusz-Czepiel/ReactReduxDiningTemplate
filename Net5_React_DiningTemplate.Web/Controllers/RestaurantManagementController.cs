@@ -44,11 +44,12 @@ namespace Net5_React_DiningTemplate.Web.Controllers
             return _restaurantManagementService.GetAllDiscountTypes();
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
-        public void AddRestaurant([FromBody]RestaurantForListVM newRestaurant)
+        public void AddRestaurant([FromForm]RestaurantForListVM newRestaurant)
         {
-            
+            _restaurantManagementService.AddRestaurant(newRestaurant);
         }
     }
 }
+//choco upgrade chocolatey

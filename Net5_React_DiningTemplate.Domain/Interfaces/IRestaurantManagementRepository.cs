@@ -10,6 +10,7 @@ namespace Net5_React_DiningTemplate.Domain.Interfaces
     public interface IRestaurantManagementRepository
     {
         IQueryable<Restaurant> GetAllRestaurants();
+        int AddRestaurant(Restaurant restaurant);
         IQueryable<Dish> GetAllDishes();
         IQueryable<RestaurantManager> GetAllManagers();
         IQueryable<DiscountType> GetAllDiscountTypes();

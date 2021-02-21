@@ -56,6 +56,7 @@ namespace Net5_React_DiningTemplate.Web
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DiningTemplateApi", Version = "v1" });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement());
                 c.AddSecurityDefinition("My Security Definition", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
@@ -66,17 +67,14 @@ namespace Net5_React_DiningTemplate.Web
                     {
                         ClientCredentials = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri($"https://localhost:44342/connnect/authorize"),
+                            AuthorizationUrl = new Uri($"https://localhost:44342/connect/authorize"),
                             TokenUrl = new Uri($"https://localhost:44342/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                                {
-                                    { "write", "the right to write" },
-                                    { "read", "the right to read" }
-                                }
+                            Scopes = new Dictionary<string, string> {
+                                { "Net5_React_DiningTemplate.WebAPI", "Demo API - full access"}
+                            }
                         }
                     }
                 });
-
                 c.OperationFilter<SwaggerAuthenticationRequirementsOperationFilter>();
             });
 
@@ -96,7 +94,13 @@ namespace Net5_React_DiningTemplate.Web
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DiningTemplateApi v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DiningTemplateApi v1");
+                    //c.OAuthClientId("Net5_React_DiningTemplate.Web");
+                    //c.OAuthAppName("Net5_React_DiningTemplate");
+                    c.OAuthUsePkce();
+                });
             }
             else
             {

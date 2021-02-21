@@ -17,6 +17,13 @@ namespace Net5_React_DiningTemplate.Infrastructure.Repositories
             _context = context;
         }
 
+        public int AddRestaurant(Restaurant restaurant)
+        {
+            _context.Restaurants.Add(restaurant);
+            _context.SaveChanges();
+            return restaurant.Id;
+        }
+
         public IQueryable<DiscountType> GetAllDiscountTypes()
         {
             return _context.DiscountTypes.AsQueryable();
