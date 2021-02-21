@@ -3,6 +3,7 @@ An advanced dining app template with .NET 5, React, REST API and ONION architect
 
 # What you need
 Visual Studio 2019 (v16.8) with web and .net core functionality
+Node.js 10+
 Sql Server in any flavor (if it's not Sql Server Express LocalDB you need to change connectionstring in appsettings.json)
 
 # REST API
