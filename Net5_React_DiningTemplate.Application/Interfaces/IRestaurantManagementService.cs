@@ -12,6 +12,8 @@ namespace Net5_React_DiningTemplate.Application.Interfaces
     {
         List<RestaurantForListVM> GetAllRestaurants();
         int AddRestaurant(RestaurantForListVM restaurant);
+        RestaurantForListVM UpdateRestaurant(RestaurantForListVM newRestaurant);
+        void DeleteRestaurant(int id);
         List<Dish> GetAllDishes();
         List<DiscountType> GetAllDiscountTypes();
         List<RestaurantManager> GetAllRestaurantManagers();

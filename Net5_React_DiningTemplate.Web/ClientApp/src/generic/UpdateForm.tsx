@@ -8,20 +8,21 @@ import { Redirect } from 'react-router';
 interface TableProps<GenericData> {
 	columns: Array<keyof GenericData>,
 	modelName: string,
-	actionRoute: string,
+	data: GenericData,
+	controllerRoute: string,
 	redirectUrl?: string 
 }
 
-export function CreateForm<AvoidShadowedGenericData>({ modelName, columns, actionRoute, redirectUrl }: TableProps<AvoidShadowedGenericData>) {
+export function UpdateForm<AvoidShadowedGenericData>({ modelName, columns, data, controllerRoute, redirectUrl }: TableProps<AvoidShadowedGenericData>) {
 	const [redirect, setRedirect] = useState(false);
 
-	const AddToDatabase = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		const form: HTMLFormElement = document.getElementById(`${modelName}AddForm`) as HTMLFormElement;
+	const UpdateInDatabase = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		const form: HTMLFormElement = document.getElementById(`${modelName}UpdateForm`) as HTMLFormElement;
 		const formData = new FormData(form);
 		const token = await authService.getAccessToken();
-		const response = await fetch(actionRoute, {
+		const response = await fetch(controllerRoute, {
 			headers: !token ? {} : { 'Authorization': `Bearer ${token}` },
-			method: 'POST',
+			method: 'PUT',
 			body: formData
 		});
 		if(response.ok)
@@ -29,19 +30,19 @@ export function CreateForm<AvoidShadowedGenericData>({ modelName, columns, actio
 	}
 
 	return (
-		<Form id={`${modelName}AddForm`}>
+		<Form id={`${modelName}UpdateForm`}>
 			<>
 			{columns.map(c => {
 				if(c === "id")
-					return <Input type="hidden" name="id" id="id" value={0} />;
+					return <Input type="hidden" name="id" id="id" value={data[c] as unknown as string} />;
 				else
 					return <FormGroup>
 						<Label for={c as string}>{c}</Label>
-						<Input type="text" name={c as string} id={c as string} placeholder={`Write ${modelName} ${c}`} />
+						<Input type="text" name={c as string} id={c as string} placeholder={`Update ${modelName} ${c}`} defaultValue={data[c] as unknown as string} />
 					</FormGroup>
 			})}
 			</>
-			<Button onClick={AddToDatabase}>Submit</Button>
+			<Button onClick={UpdateInDatabase}>Submit</Button>
 			<>{redirectUrl && redirect && <Redirect to={redirectUrl} />}</>
 		</Form>
 	)

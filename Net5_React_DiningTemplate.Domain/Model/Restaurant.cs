@@ -7,13 +7,19 @@ using System.Threading.Tasks;
 
 namespace Net5_React_DiningTemplate.Domain.Model
 {
+    #nullable disable
     [Table("Restaurants", Schema = "dining")]
-    public record Restaurant(int Id, string Name, string Address)
+    public record Restaurant
     {
-        /// <summary>
-        /// For automapper
-        /// </summary>
-        private Restaurant() : this(0,"","") { }
+        public int Id { get; set; } = 0;
+        public string Name { get; set; }
+        public string Address { get; set; }
+
+        public Restaurant(string name, string address)
+        {
+            Name = name;
+            Address = address;
+        }
 
         public virtual ICollection<Dish> Dishes { get; set; }
         public virtual ICollection<RestaurantManager> Managers{ get; set; }

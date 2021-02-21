@@ -46,9 +46,22 @@ namespace Net5_React_DiningTemplate.Web.Controllers
 
         //[Authorize]
         [HttpPost]
-        public void AddRestaurant([FromForm]RestaurantForListVM newRestaurant)
+        public IActionResult AddRestaurant([FromForm]RestaurantForListVM newRestaurant)
         {
-            _restaurantManagementService.AddRestaurant(newRestaurant);
+            int id = _restaurantManagementService.AddRestaurant(newRestaurant);
+            return Ok(new {newId = id});
+        }
+
+        [HttpDelete]
+        public void DeleteRestaurant([FromQuery]int id)
+        {
+            _restaurantManagementService.DeleteRestaurant(id);
+        }
+
+        [HttpPut]
+        public void UpdateRestaurant([FromForm]RestaurantForListVM newRestaurant)
+        {
+            _restaurantManagementService.UpdateRestaurant(newRestaurant);
         }
     }
 }

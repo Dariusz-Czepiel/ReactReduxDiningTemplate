@@ -9,6 +9,7 @@ import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizat
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import { ManagementConsole } from './dining/ManagementConsole'
 import { AddRestaurant } from './dining/AddRestaurant'
+import { UpdateRestaurant } from './dining/UpdateRestaurant';
 
 import './custom.css'
 
@@ -21,6 +22,7 @@ export default function App() {
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
         <AuthorizeRoute path='/managementConsole' component={ManagementConsole} role='Admin' />
         <AuthorizeRoute path='/addRestaurant' component={AddRestaurant} role='Admin' />
+        <AuthorizeRoute path='/editRestaurant' component={UpdateRestaurant} role='Admin' />
       </Layout>
     );
 }

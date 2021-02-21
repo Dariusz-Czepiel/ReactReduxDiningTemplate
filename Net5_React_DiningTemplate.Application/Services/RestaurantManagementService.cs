@@ -29,6 +29,18 @@ namespace Net5_React_DiningTemplate.Application.Services
             return rest.Id;
         }
 
+        public RestaurantForListVM UpdateRestaurant(RestaurantForListVM newRestaurant)
+        {
+            var rest = _mapper.Map<Restaurant>(newRestaurant);
+            var updatedRest = _restaurantManagementRepo.UpdateRestaurant(rest);
+            return _mapper.Map<RestaurantForListVM>(updatedRest);
+        }
+
+        public void DeleteRestaurant(int id)
+        {
+            _restaurantManagementRepo.DeleteRestaurant(id);
+        }
+
         public List<DiscountType> GetAllDiscountTypes()
         {
             return _restaurantManagementRepo.GetAllDiscountTypes().ToList();
@@ -48,5 +60,6 @@ namespace Net5_React_DiningTemplate.Application.Services
         {
             return _restaurantManagementRepo.GetAllRestaurants().Select(r => _mapper.Map<RestaurantForListVM>(r)).ToList();
         }
+
     }
 }

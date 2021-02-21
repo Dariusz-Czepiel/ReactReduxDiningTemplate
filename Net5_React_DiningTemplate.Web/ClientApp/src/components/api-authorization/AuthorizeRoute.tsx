@@ -11,12 +11,13 @@ interface IAuthInfo {
 
 interface IAuthorizeRouteProps {
     path: string,
-    component: any,
-    role?: string
+    component?: any,
+    //renderComponent?: (props: any) => any
+    role?: string,
 }
 
 //TODO to moze zle dzialac przez _subscription albo drugi useEffect?
-export const AuthorizeRoute: FC<IAuthorizeRouteProps> = (props) => {
+export const AuthorizeRoute : FC<IAuthorizeRouteProps> = (props: IAuthorizeRouteProps) => {
     let _subscription: any;
 
     const [authInfo, setAuthInfo] = useState<IAuthInfo>({ ready: false, authenticated: false, allowed: true });
@@ -52,13 +53,19 @@ export const AuthorizeRoute: FC<IAuthorizeRouteProps> = (props) => {
     if (!ready) {
         return <div></div>;
     } else {
-        const { component: Component, ...rest } = props;
-        return <Route {...rest}
-            render={(props) => {
+        console.log('auth route', props);
+        const { component: Component, path} = props;
+        return <Route path={path}
+            render={(p) => {
                 if (authenticated && allowed) {
-                    return <Component {...props} />
+                    // if(Component)
+                    return <Component {...p} />
+                    // else if(renderComponent)
+                    //     return renderComponent(p);
+                    // else
+                    //     return <div>You didn't pass in component nor render</div>
                 } else {
-                    console.log('return url in authorize route', returnUrl);
+                    //console.log('return url in authorize route', returnUrl);
                     if(authenticated && !allowed)
                         return <div><h2>You do not have permissions to view this</h2></div>;
                     else

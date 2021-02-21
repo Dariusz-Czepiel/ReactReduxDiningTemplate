@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, RedirectProps } from 'react-router';
 import { Button } from 'reactstrap';
 import authService from '../components/api-authorization/AuthorizeService';
 import { DatabaseTable } from '../generic/DatabaseTable';
@@ -11,6 +11,11 @@ export type Restaurant = {
     address: string
 }
 
+interface IRedirectProps{
+    pathname: string,
+    state?: Object
+}
+
 interface IRestaurantsData{
     restaurants: Restaurant[],
     loading: boolean
@@ -19,7 +24,7 @@ interface IRestaurantsData{
 export const ManagementConsole: FC = () => {
     //download data about restaurant from controller
     const [restaurantsData, setRestaurantsData] = useState<IRestaurantsData>({ restaurants: [], loading: true });
-    const [redirectString, setRedirectString] = useState("");
+    const [redirectData, setRedirectData] = useState<IRedirectProps>({ pathname: '', state: {}});
 
     useEffect(() => {
         populateWeatherData();
@@ -35,7 +40,30 @@ export const ManagementConsole: FC = () => {
         console.log(data);
     }
 
-    const redirectToAddNew = () => setRedirectString("/addRestaurant");
+    const deleteRestaurantAction = async (id: number) => {
+        const token = await authService.getAccessToken();
+        const response = await fetch(`api/RestaurantManagement/DeleteRestaurant?id=${id}`, {
+            headers: !token ? {} : { 'Authorization': `Bearer ${token}` },
+            method: 'DELETE'
+        });
+        if(response.ok)
+            await populateWeatherData();
+    }
+
+    const redirectToAddNew = () => setRedirectData({ pathname: '/addRestaurant', state: { redirectUrl: window.location.pathname } });
+    const redirectToEdit = (data: Restaurant) => () => setRedirectData({ pathname: '/editRestaurant', state: { data, redirectUrl: window.location.pathname } });
+    const deleteRestaurant = (id: number) => () => {
+        if(window.confirm('Do you want to delete restaurant?'))
+            deleteRestaurantAction(id);
+    }
+
+    //delete gives a prompt and if yes deletes the record
+
+    const databaseActions = (data: Restaurant) =>
+        <>
+            <span onClick={redirectToEdit(data)}>edit </span>
+            <span onClick={deleteRestaurant(data.id)}>delete</span>
+        </>;
 
     return (
         <div>
@@ -44,9 +72,9 @@ export const ManagementConsole: FC = () => {
             </p>
             <div style={{marginBottom: "10px"}}>
                 <Button onClick={redirectToAddNew}>Add new restaurant</Button>
-                {redirectString !== "" && <Redirect to={redirectString} />}
+                {redirectData.pathname !== "" && <Redirect to={redirectData} />}
             </div>
-            <DatabaseTable columns={['id', 'address', 'name']} data={restaurantsData.restaurants} />
+            <DatabaseTable columns={['id', 'name', 'address']} data={restaurantsData.restaurants} actions={databaseActions} />
       </div>
     );
 }

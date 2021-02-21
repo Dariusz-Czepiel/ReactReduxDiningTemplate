@@ -14,5 +14,7 @@ namespace Net5_React_DiningTemplate.Domain.Interfaces
         IQueryable<Dish> GetAllDishes();
         IQueryable<RestaurantManager> GetAllManagers();
         IQueryable<DiscountType> GetAllDiscountTypes();
+        void DeleteRestaurant(int id);
+        Restaurant UpdateRestaurant(Restaurant rest);
     }
 }
